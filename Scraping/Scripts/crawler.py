@@ -263,6 +263,7 @@ class Crawler:
                      'type_of_prop' : self.type_of_prop}
 
         get_basic_info(prop_soup, prop_info)
+        get_location_info(prop_soup, prop_info)
         get_characs(prop_soup, prop_info)
         get_location(prop_soup, prop_info)
         get_description(prop_soup, prop_info)
@@ -386,7 +387,32 @@ def get_basic_info(prop_soup, prop_info):
         prop_info['name'] = prop_basic['name']
         prop_info['price'] = int(prop_basic['offers']['price'])
         prop_info['currency'] = prop_basic['offers']['priceCurrency']
-
+        
+def get_location_info(prop_soup, prop_info):
+    '''
+    Get basic information from a property soup and update the property info
+    dictionary.
+    Inputs:
+        prop_soup: Beautiful Soup
+        prop_info: dict
+    Indirect Output: Modifies dictionary
+    '''
+    prop_basic = prop_soup.findAll('script', attrs={"type":"application/ld+json"})
+    if prop_basic:
+        prop_basic = prop_basic[1].text
+        #print(f'= GET LOCATION ======== {prop_basic}')
+        prop_basic = re.search(r'\{.*\}', prop_basic)
+        prop_basic = ast.literal_eval(prop_basic.group())
+        
+        itemElements = prop_basic['itemListElement']
+        #print(f'----- {itemElements}')
+        for x in itemElements:
+            if x['position'] == 4:
+                prop_info['Estado'] = x['item']['name'].replace('\u00f3','o').replace('\u00e1','a').replace('\u00e9','e').replace('\u00ed','i').replace('\u00fa','u')
+            if x['position'] == 5:
+                prop_info['Ciudad'] = x['item']['name'].replace('\u00f3','o').replace('\u00e1','a').replace('\u00e9','e').replace('\u00ed','i').replace('\u00fa','u')
+            if x['position'] == 6:
+                prop_info['Colonia'] = x['item']['name'].replace('\u00f3','o').replace('\u00e1','a').replace('\u00e9','e').replace('\u00ed','i').replace('\u00fa','u')
 
 def get_characs(prop_soup, prop_info):
     '''
