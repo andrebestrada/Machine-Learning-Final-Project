@@ -408,11 +408,11 @@ def get_location_info(prop_soup, prop_info):
         #print(f'----- {itemElements}')
         for x in itemElements:
             if x['position'] == 4:
-                prop_info['Estado'] = x['item']['name'].replace('\u00f3','o').replace('\u00e1','a').replace('\u00e9','e').replace('\u00ed','i').replace('\u00fa','u')
+                prop_info['Estado'] = x['item']['name']
             if x['position'] == 5:
-                prop_info['Ciudad'] = x['item']['name'].replace('\u00f3','o').replace('\u00e1','a').replace('\u00e9','e').replace('\u00ed','i').replace('\u00fa','u')
+                prop_info['Ciudad'] = x['item']['name']
             if x['position'] == 6:
-                prop_info['Colonia'] = x['item']['name'].replace('\u00f3','o').replace('\u00e1','a').replace('\u00e9','e').replace('\u00ed','i').replace('\u00fa','u')
+                prop_info['Colonia'] = x['item']['name']
 
 def get_characs(prop_soup, prop_info):
     '''
