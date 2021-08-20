@@ -398,10 +398,12 @@ def get_characs(prop_soup, prop_info):
     Indirect Output: Modifies dictionary
     '''
 
-    prop_characs = prop_soup.find_all('span', class_="attribute-key")
+    prop_characs = prop_soup.find_all('tr', class_="andes-table__row")
+
     for charac in prop_characs:
-        charac_title = charac.text[:-1]         #Drop :
-        charac_value = charac.next_sibling.next_sibling.text
+        charac_title = charac.find('th', class_="ui-pdp-specs__table__column-title").text
+        charac_title = charac_title.replace('\u00e1','a').replace('\u00fc','u')
+        charac_value = charac.find('span', class_="andes-table__column--value").text
         if re.search(r'\d', charac_value):
             charac_value = float(re.search(r'[0-9.]+', charac_value).group())
         prop_info[charac_title] = charac_value
@@ -419,6 +421,7 @@ def get_location(prop_soup, prop_info):
 
     prop_location = prop_soup.find_all('script', attrs=
                                        {"type":"text/javascript"})
+    print(f'\n\n **** {prop_location}')
     if prop_location:
         prop_location = prop_location[-1].text
         longitude = re.search(r'longitude:.[0-9-.]+', prop_location)
