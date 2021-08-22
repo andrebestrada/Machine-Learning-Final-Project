@@ -55,8 +55,9 @@ def filter_data():
 @app.route("/results")
 def results():
 
-    national_data = pd.read_csv('https://national-data.s3.amazonaws.com/national_data_final.json')
-
+    print("Its Alive :D")
+    national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
+    print("Loaded Data")
     national_data = national_data[national_data['currency']=='MXN']
     national_data = national_data[national_data['name'].str.contains('Renta')==False]
     national_data = national_data[national_data['cp'].isnull()==False]
@@ -139,10 +140,10 @@ def results():
         except Exception as e:
             print(e)
     # This is commented only for testing
-    
+    print("before jsonify")
     response = jsonify(results)
     response.headers.add('Access-Control-Allow-Origin', '*')
-
+    print("It should work")
     return response
 
 # @app.route("/songs")
