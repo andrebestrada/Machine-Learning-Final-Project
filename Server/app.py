@@ -52,98 +52,104 @@ def filter_data():
     
     return filters
 
-@app.route("/results")
-def results():
+# Function that receives data and a ML model and return Performance Results
+def machine_learning_model(data, model):
+    X_full = data
+    y = X_full.price
+    features = ['type_of_prop','cp', 'Superficie total','Superficie construida', 'Ambientes', 'Recamaras', 'Banos','Estacionamientos', 'Antiguedad', 'Cantidad de pisos','Cuota mensual de mantenimiento', 'Bodegas']
+    X = X_full[features]
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=0.8, test_size=0.2, random_state=0)
 
-    print("Its Alive :D")
+    #One Hot Encoding  
+    s = (X_train.dtypes == 'object')
+    object_cols = list(s[s].index)
+    OH_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
+    OH_cols_train = pd.DataFrame(OH_encoder.fit_transform(X_train[object_cols]))
+    OH_cols_valid = pd.DataFrame(OH_encoder.transform(X_valid[object_cols]))
+    OH_cols_train.index = X_train.index
+    OH_cols_valid.index = X_valid.index
+    num_X_train = X_train.drop(object_cols, axis=1)
+    num_X_valid = X_valid.drop(object_cols, axis=1)
+    OH_X_train = pd.concat([num_X_train, OH_cols_train], axis=1)
+    OH_X_valid = pd.concat([num_X_valid, OH_cols_valid], axis=1)
+
+    # Remove NAs
+    OH_X_train=OH_X_train.fillna(0)
+    OH_X_valid=OH_X_valid.fillna(0)
+    
+    # Fit Model
+    model.fit(OH_X_train, y_train)
+    prediction = model.predict(OH_X_valid)
+ 
+    #Performance Metrics 
+    mae = round(mean_absolute_error(y_valid, prediction),2)
+    score = round(model.score(OH_X_valid, y_valid)*100,2)
+    mape = round(np.mean(np.abs((y_valid - prediction) / np.abs(y_valid))),2)
+    acc = round(100*(1 - mape), 2)
+    
+    results={'mae':mae,
+             'mape':mape,
+             'accuracy':acc,
+             'score':score
+            }
+    
+    return results
+
+
+@app.route("/dropdowns")
+def dropdowns():
     national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
-    print("Loaded Data")
+
     national_data = national_data[national_data['currency']=='MXN']
     national_data = national_data[national_data['name'].str.contains('Renta')==False]
     national_data = national_data[national_data['cp'].isnull()==False]
 
     national_data = national_data[national_data['price']>1000000]
     national_data = national_data[national_data['price']<10000000]
-    national_data = national_data[national_data['Estado']=='Puebla']
     national_data = national_data[national_data['Superficie total']<300]
    
-    #################################################################################
-    # Define the models
-    model_1 = RandomForestRegressor(n_estimators=50, random_state=0)
-    model_2 = RandomForestRegressor(n_estimators=100, random_state=0)
-    model_3 = RandomForestRegressor(n_estimators=100, criterion='mae', random_state=0)
-    model_4 = RandomForestRegressor(n_estimators=200, min_samples_split=20, random_state=0)
-    model_5 = RandomForestRegressor(n_estimators=100, max_depth=7, random_state=0)
+    states = national_data["Estado"].unique()
+    # states = np.insert(states,0,"")
 
-    models = [model_1, model_2, model_3, model_4, model_5]
+    dropdowns= pd.DataFrame.from_dict({'states':[states]})
+
+    response = Response(dropdowns.to_json(orient="records"), mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
+
+
+@app.route("/results")
+def results():
+    print("Its Alive :D")
+    state = request.args.get("State")
+
+    national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
+    print("Loaded Data")
+
+    national_data = national_data[national_data['currency']=='MXN']
+    national_data = national_data[national_data['name'].str.contains('Renta')==False]
+    national_data = national_data[national_data['cp'].isnull()==False]
+
+    national_data = national_data[national_data['price']>1000000]
+    national_data = national_data[national_data['price']<10000000]
+    national_data = national_data[national_data['Superficie total']<300]
    
+    states = national_data["Estado"].unique()
+    dropdowns = {'states':states}
     #################################################################################
-   
-    # Read data
-    X_full = national_data
-    # X_test_full = pd.read_csv("")
-
-    # Obtain Target and Predictions
-    y = X_full.price
-
-    features = ['type_of_prop',
-        'Estado', 'Ciudad', 'Colonia', 'Superficie total',
-        'Superficie construida', 'Ambientes', 'Recamaras', 'Banos',
-        'Estacionamientos', 'Antiguedad', 'Cantidad de pisos',
-        'Cuota mensual de mantenimiento', 'Bodegas']
-
-    X = X_full[features]
-
-    # Break off validation set from training data
-    X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=0.8, test_size=0.2, random_state=0)
+    # Define model
+    model = RandomForestRegressor(n_estimators=100, criterion='mae', random_state=0)
 
     #################################################################################
-    
-    s = (X_train.dtypes == 'object')
-    object_cols = list(s[s].index)
-
-    # Apply one-hot encoder to each column with categorical data
-    OH_encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
-    OH_cols_train = pd.DataFrame(OH_encoder.fit_transform(X_train[object_cols]))
-    OH_cols_valid = pd.DataFrame(OH_encoder.transform(X_valid[object_cols]))
-
-    # One-hot encoding removed index; put it back
-    OH_cols_train.index = X_train.index
-    OH_cols_valid.index = X_valid.index
-
-    # Remove categorical columns (will replace with one-hot encoding)
-    num_X_train = X_train.drop(object_cols, axis=1)
-    num_X_valid = X_valid.drop(object_cols, axis=1)
-
-    # Add one-hot encoded columns to numerical features
-    OH_X_train = pd.concat([num_X_train, OH_cols_train], axis=1)
-    OH_X_valid = pd.concat([num_X_valid, OH_cols_valid], axis=1)
-
-    OH_X_train=OH_X_train.fillna(0)
-    OH_X_valid=OH_X_valid.fillna(0)
+    # Machine Learning Function
+    data = national_data[national_data['Estado']==state]
+    results = machine_learning_model(data, model)
 
     #################################################################################
-
-    
-    # Function for comparing different models
-    def score_model(model, X_t=OH_X_train, X_v=OH_X_valid, y_t=y_train, y_v=y_valid):
-        model.fit(X_t, y_t)
-        preds = model.predict(X_v)
-        return mean_absolute_error(y_v, preds)
-    
-    results = {}
-    for i in range(0, len(models)):
-        try:
-            mae = score_model(models[i])
-            print("Model %d MAE: %d" % (i+1, mae))
-            results[i] = mae
-        except Exception as e:
-            print(e)
-    # This is commented only for testing
-    print("before jsonify")
     response = jsonify(results)
     response.headers.add('Access-Control-Allow-Origin', '*')
-    print("It should work")
+
     return response
 
 # @app.route("/songs")
