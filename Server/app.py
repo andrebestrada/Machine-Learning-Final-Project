@@ -13,12 +13,16 @@ import pandas as pd
 import os
 import json
 
+# OH_X_train=[][]
+# OH_X_valid=[][]
+# y_train=[][]
+# y_valid=[][]
+
 app = Flask(__name__)
 
 #mongo_db = "Spotifydb"
 #mongo = PyMongo(app, uri=f'mongodb://localhost:27017/{mongo_db}')
 #collection = mongo.db.Top200byCountry
-
 
 # This function receives some parameters that will be used to group by and summarize the data 
 def group_data(data,column,value,headers):
@@ -53,7 +57,24 @@ def filter_data():
     return filters
 
 # Function that receives data and a ML model and return Performance Results
-def machine_learning_model(data, model):
+
+def data_loading():
+    national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
+
+    national_data = national_data[national_data['currency']=='MXN']
+    national_data = national_data[national_data['name'].str.contains('Renta')==False]
+    national_data = national_data[national_data['cp'].isnull()==False]
+
+    national_data = national_data[national_data['price']>1000000]
+    national_data = national_data[national_data['price']<10000000]
+    national_data = national_data[national_data['Superficie total']<300]
+
+    return national_data
+
+
+
+def split_and_encoding(data):
+    
     X_full = data
     y = X_full.price
     features = ['type_of_prop','cp', 'Superficie total','Superficie construida', 'Ambientes', 'Recamaras', 'Banos','Estacionamientos', 'Antiguedad', 'Cantidad de pisos','Cuota mensual de mantenimiento', 'Bodegas']
@@ -76,7 +97,13 @@ def machine_learning_model(data, model):
     # Remove NAs
     OH_X_train=OH_X_train.fillna(0)
     OH_X_valid=OH_X_valid.fillna(0)
-    
+
+    return OH_X_train, OH_X_valid, y_train, y_valid
+
+
+def machine_learning_model(data, model):
+    OH_X_train, OH_X_valid, y_train, y_valid = split_and_encoding(data)
+
     # Fit Model
     model.fit(OH_X_train, y_train)
     prediction = model.predict(OH_X_valid)
@@ -86,27 +113,39 @@ def machine_learning_model(data, model):
     score = round(model.score(OH_X_valid, y_valid)*100,2)
     mape = round(np.mean(np.abs((y_valid - prediction) / np.abs(y_valid))),2)
     acc = round(100*(1 - mape), 2)
+
+
     
+
+    
+    # Feature Importance
+    df = pd.DataFrame({'Features':OH_X_valid.columns, 'Importance':model.feature_importances_}).reset_index(drop=True)
+    weight = float(float(df[df.iloc[:, 0] == 0]['Importance']))+float(float(df[df.iloc[:, 0] == 1]['Importance']))
+    new_row = pd.DataFrame({'Features':'Tipo','Importance':weight},index=[13])
+    df = df.append(new_row)
+
+    df.drop(labels=df[df.iloc[:, 0] == 1].index, axis=0, inplace=True)
+    df.drop(labels=df[df.iloc[:, 0] == 0].index, axis=0, inplace=True)
+    df.sort_values("Importance", inplace=True)
+    dict_df = df.to_dict()
+
+    print("step 2")
+
+    # Dictionarie with results
     results={'mae':mae,
              'mape':mape,
              'accuracy':acc,
-             'score':score
+             'score':score,
+             'features_importance': dict_df
             }
-    
+
     return results
 
 
 @app.route("/dropdowns")
 def dropdowns():
-    national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
 
-    national_data = national_data[national_data['currency']=='MXN']
-    national_data = national_data[national_data['name'].str.contains('Renta')==False]
-    national_data = national_data[national_data['cp'].isnull()==False]
-
-    national_data = national_data[national_data['price']>1000000]
-    national_data = national_data[national_data['price']<10000000]
-    national_data = national_data[national_data['Superficie total']<300]
+    national_data = data_loading()
    
     states = national_data["Estado"].unique()
     # states = np.insert(states,0,"")
@@ -122,21 +161,15 @@ def dropdowns():
 @app.route("/results")
 def results():
     print("Its Alive :D")
+
+    #################################################################################
+    # Get Parameters
     state = request.args.get("State")
 
-    national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
-    print("Loaded Data")
-
-    national_data = national_data[national_data['currency']=='MXN']
-    national_data = national_data[national_data['name'].str.contains('Renta')==False]
-    national_data = national_data[national_data['cp'].isnull()==False]
-
-    national_data = national_data[national_data['price']>1000000]
-    national_data = national_data[national_data['price']<10000000]
-    national_data = national_data[national_data['Superficie total']<300]
+    #################################################################################
+    # Loading Data
+    national_data = data_loading()
    
-    states = national_data["Estado"].unique()
-    dropdowns = {'states':states}
     #################################################################################
     # Define model
     model = RandomForestRegressor(n_estimators=100, criterion='mae', random_state=0)
@@ -147,10 +180,28 @@ def results():
     results = machine_learning_model(data, model)
 
     #################################################################################
+    # Features Importance
+
+
+    #################################################################################
     response = jsonify(results)
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
+
+@app.route("/features")
+def features():
+    state = request.args.get("State")
+
+    national_data = data_loading()
+
+    model = RandomForestRegressor(n_estimators=100, criterion='mae', random_state=0)
+
+
+
+    
+
+
 
 # @app.route("/songs")
 # def jsonified():
