@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="shortcut icon" href="Resources/Images/House sold.png" />
+	<title>México Real State</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	
+	<!-- BEGIN SETTINGS -->
+	<link class="js-stylesheet" href="Static/css/light.css" rel="stylesheet">
+	
+	<!-- END SETTINGS -->
+
+
+
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="px-2 sidebar-brand" href="index.html">
+					<span class="sidebar-brand-text align-middle">
+						<img src="Resources/Images/World.png" alt="logo" style="width: 35px;">
+						México Real State
+						<sup><small class="badge bg-primary text-uppercase">Pro</small></sup>
+					</span>
+				</a>
+
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						
+					</li>
+					<li class="sidebar-item active">
+						<a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboards</span>
+						</a>
+						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+							<li class="sidebar-item active"><a class="sidebar-link" href="index.html">Model</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="tableau.html">Descriptive Analysis</a></li>
+						</ul>
+					</li>
+				</ul>
+
+				<div class="sidebar-cta">
+					<div class="sidebar-cta-content">
+						<strong class="d-inline-block mb-2">Github Repo</strong>
+						<div class="mb-3 text-sm">
+							Visit our github page to learn more about the project.
+						</div>
+
+						<div class="d-grid">
+							<a href="https://github.com/andrebestrada/Machine-Learning-Final-Project" class="btn btn-outline-primary" target="_blank">Visit</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+			
+
+				<form class="d-none d-sm-inline-block">
+					<div class="input-group input-group-navbar">
+						<input type="text" class="form-control" placeholder="Search…" aria-label="Search">
+						<button class="btn" type="button">
+							<i class="align-middle" data-feather="search"></i>
+						</button>
+					</div>
+				</form>
+
+				<div class="navbar-collapse collapse"> 
+				
+				</div>
+				
+				<img src="Resources/Images/House sold.png" style="width:40px;height:40px">
+				
+			</nav>
+
+			
+
+			<main class="content pt-4">
+				<div class="container-fluid p-0">
+					<div class="row  mb-2 mb-xl-3">
+						<div class="col-auto d-none d-sm-block">
+							<h3><strong>Prediction</strong> Model</h3>
+						</div>
+
+						<div class="col-auto ms-auto text-end mt-n1">
+							<a href="predictions.html" class="btn btn-primary me-2">Predictions</a>
+							<a href="index.html" class="btn btn-light bg-white">Model</a>
+						</div>
+					</div>
+
+						<!-- ############################################################################################################################ -->
+<!-- Input fields for the model -->
+
+					<div class="row mt-4">
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Postal Code</span>
+								</div>
+								<input id="min_price" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Total Surface</span>
+								</div>
+								<input id="min_surface" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Constructed Surface</span>
+								</div>
+								<input id="min_rooms" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Rooms</span>
+								</div>
+								<input id="max_price" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Bathrooms</span>
+								</div>
+								<input id="max_surface" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Parking Lots</span>
+								</div>
+								<input id="max_rooms" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					
+						
+					</div>
+
+
+					<div class="row mt-5">
+						<div class="col-12 d-flex">
+								<div class="w-100">
+									<div class="row">
+										<div class="col-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">ESTIMATED VALUE OF YOUR NEW HOME</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="Resources/Images/House sold.png" alt="mae">
+														</div>
+													</div>
+													<h1 class="mt-1 mb-3 h1" id="MAE"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-primary-light"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">ACCURACY</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="Resources/Images/Target.png" alt="mae">
+														</div>
+
+													</div>
+													<h1 class="mt-1 mb-3" id="ACCURACY"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+						</div>
+					</div>
+
+
+				</div> <!--end of container-->
+			</main> <!--end of main-->
+
+	
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a href="index.html" class="text-muted"><strong>Bootcamp Final Project</strong></a>
+							</p>
+						</div>
+						<div class="col-6 text-end">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Support</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Privacy</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<!-- d3 JS -->
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	
+	<!-- Plotly JS -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+	<!--Chart.js  -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+	
+	<script src="Static/js/app.js"></script>
+	<!-- Custom js for this page -->
+	<!-- <script src="Static/js/app.js"></script> -->
+	<!-- <script src="Static/js/grid_music_analysis.js"></script> -->
+
+	<!-- Moment is used to parse dates formats -->
+	<script src="https://unpkg.com/moment@2.24.0/moment.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/linq.js/2.2.0.2/linq.min.js"></script>
+	
+
+	</body>
+
+</html>

@@ -56,23 +56,55 @@ def filter_data():
     
     return filters
 
-# Function that receives data and a ML model and return Performance Results
 
+# Function that receives data from AWS Bucket
 def data_loading():
     national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
+    # state = national_data["Estado"].unique()
+    # min_price = 1000000
+    # max_price = 1000000
+
+    args = request.args
+    
+    for k, v in args.items():
+        if k == "State" and v != None:
+            national_data = national_data[national_data['Estado']==v]
+        if k == "Min_price" and v != '':
+            national_data = national_data[national_data['price'] > float(v)]
+        if k == "Max_price" and v != '':
+            national_data = national_data[national_data['price'] < float(v)]
+        if k == "Min_surface" and v != '':
+            national_data = national_data[national_data['Superficie total'] > float(v)]
+        if k == "Max_surface" and v != '':
+            national_data = national_data[national_data['Superficie total'] < float(v)]
+        if k == "Min_rooms" and v != '':
+            national_data = national_data[national_data['Recamaras'] > float(v)]
+        if k == "Max_rooms" and v != '':
+            print("#################################################################")
+            national_data = national_data[national_data['Recamaras'] < float(v)]
+        if k == "Min_enviroments" and v != '':
+            national_data = national_data[national_data['Ambientes'] > float(v)]
+        if k == "Max_enviroments" and v != '':
+            national_data = national_data[national_data['Ambientes'] < float(v)]
+                    
+
+    # print(args.get('Min_price'))
+    # validate_null()
+
+    # national_data = national_data[national_data['Estado']==state]
+    # national_data = national_data[national_data['price']>min_price]
+    # national_data = national_data[national_data['price']<max_price]
 
     national_data = national_data[national_data['currency']=='MXN']
     national_data = national_data[national_data['name'].str.contains('Renta')==False]
     national_data = national_data[national_data['cp'].isnull()==False]
 
-    national_data = national_data[national_data['price']>1000000]
-    national_data = national_data[national_data['price']<10000000]
-    national_data = national_data[national_data['Superficie total']<300]
+    # national_data = national_data[national_data['price']<10000000]
+    # national_data = national_data[national_data['Superficie total']<300]
 
     return national_data
 
-
-
+# Function Splits Data and Transforms Categorical Values with One Hot Encoding
 def split_and_encoding(data):
     
     X_full = data
@@ -114,39 +146,60 @@ def machine_learning_model(data, model):
     mape = round(np.mean(np.abs((y_valid - prediction) / np.abs(y_valid))),2)
     acc = round(100*(1 - mape), 2)
 
-
-    
-
-    
     # Feature Importance
     df = pd.DataFrame({'Features':OH_X_valid.columns, 'Importance':model.feature_importances_}).reset_index(drop=True)
-    weight = float(float(df[df.iloc[:, 0] == 0]['Importance']))+float(float(df[df.iloc[:, 0] == 1]['Importance']))
+    print("#################################################")
+    # print(float(float(df[df.iloc[:, 0] == 0]['Importance'])))
+    # print(float(float(df[df.iloc[:, 0] == 1]['Importance'])))
+
+    try:
+        weight = float(float(df[df.iloc[:, 0] == 0]['Importance']))+float(float(df[df.iloc[:, 0] == 1]['Importance']))
+    except Exception as e:
+        weight = float(float(df[df.iloc[:, 0] == 0]['Importance']))
+
     new_row = pd.DataFrame({'Features':'Tipo','Importance':weight},index=[13])
     df = df.append(new_row)
+    
 
     df.drop(labels=df[df.iloc[:, 0] == 1].index, axis=0, inplace=True)
     df.drop(labels=df[df.iloc[:, 0] == 0].index, axis=0, inplace=True)
-    df.sort_values("Importance", inplace=True)
+    df.sort_values("Importance", ascending=False, inplace=True)
+    df = df.reset_index(drop=True)
     dict_df = df.to_dict()
-
-    print("step 2")
+    # print(dict_df)
+    # box_prices = data['price']
+    # print(box_prices)
 
     # Dictionarie with results
     results={'mae':mae,
              'mape':mape,
              'accuracy':acc,
              'score':score,
-             'features_importance': dict_df
+             'features_importance': dict_df,
+            #  'box_prices':box_prices
             }
 
+    print(results)
     return results
 
 
 @app.route("/dropdowns")
 def dropdowns():
+    
+    # args = request.args
+    
+    # for k, v in args.items():
+        # print(k)
 
+    # print("Antes del for")
+    # for k, v in args.items():
+        # print("k: "+k)
+        # print("v: "+v)
+
+        # if(v != "" and k != 'Group_by'): 
+    
     national_data = data_loading()
-   
+    
     states = national_data["Estado"].unique()
     # states = np.insert(states,0,"")
 
@@ -164,7 +217,10 @@ def results():
 
     #################################################################################
     # Get Parameters
-    state = request.args.get("State")
+    args = request.args
+    print(args)
+    # state = request.args.get("State")
+    # min_price = request.args.get("Min_price")
 
     #################################################################################
     # Loading Data
@@ -176,8 +232,12 @@ def results():
 
     #################################################################################
     # Machine Learning Function
-    data = national_data[national_data['Estado']==state]
-    results = machine_learning_model(data, model)
+    # data = national_data[national_data['Estado']==state]
+    # if min_price != None:
+        # data = national_data[national_data['price']<min_price]
+        # print("Min price is not blank")
+
+    results = machine_learning_model(national_data, model)
 
     #################################################################################
     # Features Importance
@@ -189,15 +249,33 @@ def results():
 
     return response
 
-@app.route("/features")
-def features():
-    state = request.args.get("State")
+# @app.route("/features")
+# def features():
+#     state = request.args.get("State")
 
-    national_data = data_loading()
+#     national_data = data_loading()
 
-    model = RandomForestRegressor(n_estimators=100, criterion='mae', random_state=0)
+#     model = RandomForestRegressor(n_estimators=100, criterion='mae', random_state=0)
 
 
+
+@app.route("/boxes")
+def boxes():
+    # state = request.args.get("State")
+    data = data_loading()
+
+    box_data={'box_price':[data['price']],
+                'box_surface':[data['Superficie total']],
+                'box_room':[data['Recamaras']],
+                'box_enviroment':[data['Ambientes']]
+                }
+
+    box_data = pd.DataFrame.from_dict(box_data)
+    
+    response = Response(box_data.to_json(orient="records"), mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
     
 
