@@ -61,12 +61,14 @@ def filter_data():
 def data_loading():
     # national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
     national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_complete.json')
-    
+    national_data = national_data.fillna(0)
 
     args = request.args
-    
+    print(args)
+
+
     for k, v in args.items():
-        if k == "State" and v != None:
+        if k == "State" and v != '':
             national_data = national_data[national_data['Estado']==v]
         if k == "Min_price" and v != '':
             national_data = national_data[national_data['price'] > float(v)]
@@ -238,6 +240,8 @@ def boxes():
     
 @application.route("/prediction")
 def prediction():
+    
+    input_prediction = pd.DataFrame()
     #################################################################################
     # Loading Data
     national_data = data_loading()
@@ -261,6 +265,8 @@ def prediction():
     antiguedad_default = national_data['Antiguedad'].mode()
     enviroment_default = national_data['Ambientes'].mode()   
     mantenimiento_default = national_data['Cuota mensual de mantenimiento'].mode()
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    print(national_data['Bodegas'])
     bodegas_default = national_data['Bodegas'].mode()
     floor_default = national_data['Cantidad de pisos'].mode()
 
@@ -270,17 +276,17 @@ def prediction():
     args = request.args
     
     for k, v in args.items():
-        if k == "postal_code" and v != None:
+        if k == "postal_code" and v != '':
             cp_default = v
-        if k == "total_surface" and v != None:
+        if k == "total_surface" and v != '':
             surfaceTot_default = v
-        if k == "rooms" and v != None:
+        if k == "rooms" and v != '':
             room_default = v
-        if k == "bathrooms" and v != None:
+        if k == "bathrooms" and v != '':
             bathroom_default = v
-        if k == "constructed_surface" and v != None:
+        if k == "constructed_surface" and v != '':
             surface_Cons_default = v
-        if k == "parking_lots" and v != None:
+        if k == "parking_lots" and v != '':
             parkinglot_default = v
     
     input_prediction = pd.DataFrame({'cp':cp_default, 'Superficie construida':surface_Cons_default,'Recamaras': room_default, 
@@ -288,7 +294,9 @@ def prediction():
                                  'Bodegas':bodegas_default, 'Superficie total':surfaceTot_default, 'Ambientes':enviroment_default,
                                  'Banos':bathroom_default, 'Antiguedad':antiguedad_default, 'Cuota mensual de mantenimiento':mantenimiento_default,
                                 '0':house_default,'1':apartment_default})
-    
+    print("################################################################################")
+    print(input_prediction)
+
     prediction_result = model.predict(input_prediction)
     results = pd.DataFrame({'Prediction':prediction_result[0]},index=[0])
     

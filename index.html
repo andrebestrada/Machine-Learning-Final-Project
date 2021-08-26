@@ -17,7 +17,19 @@
 	<link class="js-stylesheet" href="Static/css/light.css" rel="stylesheet">
 	
 	<!-- END SETTINGS -->
+	<script>
 
+		function Hide_Model(){
+			document.getElementById("Main_Model").style.display = "none";
+			document.getElementById("Main_Prediction").style.display = "block";
+		}
+
+		function Hide_Prediction(){
+			document.getElementById("Main_Prediction").style.display = "none";
+			document.getElementById("Main_Model").style.display = "block";
+		}
+
+	</script>
 
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
@@ -85,7 +97,7 @@
 				
 			</nav> -->
 
-			<main class="content pt-4">
+			<main class="content pt-4" id="Main_Model">
 				<div class="container-fluid p-0">
 					<div class="row  mb-2 mb-xl-3">
 						<div class="col-auto d-none d-sm-block">
@@ -93,8 +105,8 @@
 						</div>
 
 						<div class="col-auto ms-auto text-end mt-n1">
-							<a href="predictions.html" class="btn btn-light bg-white me-2">Predictions</a>
-							<a href="index.html" class="btn btn-primary">Model</a>
+							<a id="model_show" href="#" class="btn btn-primary ">Model</a>
+							<a onclick="Hide_Model()" id="predictions_show" href="#" class="btn btn-light bg-white me-2">Predictions</a>
 						</div>
 					</div>
 					<div class="row">
@@ -105,7 +117,7 @@
 									<div class="float-end">
 										<form class="row g-">
 											<!-- <div class="col-auto"> -->
-												<select id="state_selector" class="form-control form-select form-select-sm bg-light border-0">
+												<select id="state_selector" class="form-control form-control_ form-select form-select-sm bg-light border-0">
 												</select>
 												
 											<!-- </div> -->
@@ -229,7 +241,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-sm">Max Price</span>
 			</div>
-			<input id="max_price" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+			<input id="max_price" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 		</div>
 	</div>
 
@@ -238,7 +250,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-sm">Max Surface</span>
 			</div>
-			<input id="max_surface" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+			<input id="max_surface" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 		</div>
 	</div>
 
@@ -247,7 +259,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-sm">Max Rooms</span>
 			</div>
-			<input id="max_rooms" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+			<input id="max_rooms" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 		</div>
 	</div>
 
@@ -256,7 +268,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-sm">Max Enviroments</span>
 			</div>
-			<input id="max_enviroments" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+			<input id="max_enviroments" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 		</div>
 	</div>
 
@@ -269,7 +281,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text" id="inputGroup-sizing-sm">Min Price</span>
 								</div>
-								<input id="min_price" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+								<input id="min_price" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 							</div>
 						</div>
 						<div class="col-3 d-flex">
@@ -277,7 +289,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text" id="inputGroup-sizing-sm">Min Surface</span>
 								</div>
-								<input id="min_surface" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+								<input id="min_surface" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 							</div>
 						</div>
 						<div class="col-3 d-flex">
@@ -285,7 +297,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text" id="inputGroup-sizing-sm">Min Rooms</span>
 								</div>
-								<input id="min_rooms" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+								<input id="min_rooms" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 							</div>
 						</div>
 						<div class="col-3 d-flex">
@@ -293,7 +305,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text" id="inputGroup-sizing-sm">Min Enviroments</span>
 								</div>
-								<input id="min_enviroments" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+								<input id="min_enviroments" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 							</div>
 						</div>
 					</div>
@@ -449,7 +461,134 @@
 				</div>
 			</main>
 
+
+			<main class="content pt-4" id="Main_Prediction">
+				<div class="container-fluid p-0">
+					<div class="row  mb-2 mb-xl-3">
+						<div class="col-auto d-none d-sm-block">
+							<h3><strong>Prediction</strong> Model</h3>
+						</div>
+
+						<div class="col-auto ms-auto text-end mt-n1">
+							<a onclick="Hide_Prediction()" id="model_show" href="#" class="btn btn-light bg-white">Model</a>
+							<a id="predictions_show" href="#" class="btn btn-primary me-2">Predictions</a>
+						</div>
+					</div>
+
+					<!-- ####################################################################### -->
+					<!-- Input fields for the model -->
+
+					<div class="row mt-4">
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Postal Code</span>
+								</div>
+								<input id="cp_selector" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Total Surface</span>
+								</div>
+								<input id="total_surface" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Constructed Surface</span>
+								</div>
+								<input id="cons_surface" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Rooms</span>
+								</div>
+								<input id="rooms" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Bathrooms</span>
+								</div>
+								<input id="bathrooms" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Parking Lots</span>
+								</div>
+								<input id="parking_lots" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					
+						
+					</div>
+
+
+					<div class="row mt-5">
+						<div class="col-12 d-flex">
+								<div class="w-100">
+									<div class="row">
+										<div class="col-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">ESTIMATED VALUE OF YOUR NEW HOME</h5>
+														</div>
 	
+														<div class="col-auto">
+															<img class="avatar" src="Resources/Images/House sold.png" alt="mae">
+														</div>
+													</div>
+													<h1 class="mt-1 mb-3 h1" id="predicted_value"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-primary-light"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">ACCURACY</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="Resources/Images/Target.png" alt="mae">
+														</div>
+
+													</div>
+													<h1 class="mt-1 mb-3" id="accuracy_value"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+						</div>
+					</div>
+
+
+				</div> <!--end of container-->
+			</main> <!--end of main-->
 
 			<footer class="footer">
 				<div class="container-fluid">
@@ -474,6 +613,10 @@
 			</footer>
 		</div>
 	</div>
+
+	<script>
+		document.getElementById("Main_Prediction").style.display = "none";
+	</script>
 
 	<!-- d3 JS -->
 	<script src="https://d3js.org/d3.v5.min.js"></script>

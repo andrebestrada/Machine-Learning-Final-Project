@@ -1,8 +1,26 @@
 // state='Puebla'
-console.log("Its alive")
-var base_url='http://127.0.0.1:5000'
+console.log("Its alive");
+var base_url='http://127.0.0.1:5000';
+var accuracy_value;
 
 var canvasBar;
+var test;
+var state;
+var min_price;
+var max_price;
+var min_surface;
+var max_surface;
+var min_rooms;
+var max_rooms;
+var min_enviroments;
+var max_enviroments;
+
+var postal_code;
+var total_surface;
+var rooms;
+var bathrooms;
+var constructed_surface;
+var parking_lots;
 
 // Function that returns Canvas of Bar Chart
 function BarChartCanvas(id, category, streams, bar_color){
@@ -70,6 +88,15 @@ function BoxChart(id, box_data){
       };
     Plotly.newPlot(id, data, layout);
 }
+// Function that crates end point params
+function query_params(){
+    return 'State='+ state + '&Min_price=' + min_price + '&Max_price=' + max_price + '&Min_surface=' + min_surface + '&Max_surface=' + max_surface + '&Min_rooms=' + min_rooms + '&Max_rooms=' + max_rooms + '&Min_enviroments=' + min_enviroments + '&Max_enviroments=' + max_enviroments 
+}
+
+function predict_params(){
+    return '&postal_code=' + postal_code + '&total_surface=' + total_surface + '&rooms=' + rooms + '&bathrooms=' + bathrooms + '&constructed_surface=' + constructed_surface + '&parking_lots=' + parking_lots 
+}
+
 // Fill dropdowns when page loads
 d3.json(base_url+'/dropdowns?').then(importedData=>{
     data=importedData
@@ -79,10 +106,13 @@ d3.json(base_url+'/dropdowns?').then(importedData=>{
 })
 
 // Listener that updates model when any filter changes
-d3.selectAll(".form-control").on("change", updateModel);
+d3.selectAll(".form-control_").on("change", updateModel);
 
 function updateModel() {
     console.log("Updating Model...")
+    test = d3.select("#state_selector").property("value")
+    console.log("En model: " + test)
+
     state = d3.select("#state_selector").property("value")
     min_price = d3.select("#min_price").property("value")
     max_price = d3.select("#max_price").property("value")
@@ -93,13 +123,12 @@ function updateModel() {
     min_enviroments = d3.select("#min_enviroments").property("value")
     max_enviroments = d3.select("#max_enviroments").property("value")
 
-    d3.json(base_url+'/results?State='+ state + '&Min_price=' + min_price + '&Max_price=' + max_price
-                                                            + '&Min_surface=' + min_surface + '&Max_surface=' + max_surface 
-                                                            + '&Min_rooms=' + min_rooms + '&Max_rooms=' + max_rooms 
-                                                            + '&Min_enviroments=' + min_enviroments + '&Max_enviroments=' + max_enviroments 
-    ).then(importedData=>{
+    d3.json(base_url+'/results?'+ query_params()).then(importedData=>{
+    
         var data = importedData
         console.log(data)
+
+        accuracy_value = data.accuracy+"%"
 
         d3.select("#MAE").text(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MXN' }).format(data.mae))
         d3.select("#MAPE").text(data.mape)
@@ -129,13 +158,14 @@ function updateModel() {
 // Predictions
 
 // Listener that updates model when any filter changes
-d3.selectAll(".form-predictor").on("change", predictModel);
+d3.selectAll(".form-predictor_").on("change", predictModel);
 
 function predictModel() {
     console.log("Predicting Model...")
+    console.log("En predict: " + test)
+    
 
     state = d3.select("#state_selector").property("value")
-
     postal_code = d3.select("#cp_selector").property("value")
     total_surface = d3.select("#total_surface").property("value")
     rooms = d3.select("#rooms").property("value")
@@ -143,30 +173,15 @@ function predictModel() {
     constructed_surface = d3.select("#cons_surface").property("value")
     parking_lots = d3.select("#parking_lots").property("value")
     
-    // min_price = d3.select("#min_price").property("value")
-    // max_price = d3.select("#max_price").property("value")
-    // min_surface = d3.select("#min_surface").property("value")
-    // max_surface = d3.select("#max_surface").property("value")
-    // min_rooms = d3.select("#min_rooms").property("value")
-    // max_rooms = d3.select("#max_rooms").property("value")
-    // min_enviroments = d3.select("#min_enviroments").property("value")
-    // max_enviroments = d3.select("#max_enviroments").property("value")
-
-    d3.json(base_url+'/prediction?State='+ state + '&postal_code=' + postal_code + '&total_surface=' + total_surface
-                                                            + '&rooms=' + rooms + '&bathrooms=' + bathrooms 
-                                                            + '&constructed_surface=' + constructed_surface + '&parking_lots=' + parking_lots 
-    ).then(importedData=>{
+    
+    d3.json(base_url+'/prediction?'+ query_params() + predict_params()).then(importedData=>{
         var data = importedData
-        console.log(data)
 
-        // d3.select("#MAE").text(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MXN' }).format(data.mae))
-        // d3.select("#MAPE").text(data.mape)
-        // d3.select("#ACCURACY").text(data.accuracy+"%") 
-        // d3.select("#SCORE").text(data.score)
+        prediction = data.map(sample=>sample.Prediction) 
+        prediction = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MXN' }).format(prediction)
 
-
-        
-        
+        d3.select("#predicted_value").text(prediction)
+        d3.select("#accuracy_value").text(accuracy_value)        
     })
 
 }
