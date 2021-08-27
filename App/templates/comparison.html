@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="shortcut icon" href="static/resources/images/House sold.png" />
+	<title>México Real State</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	
+	<!-- BEGIN SETTINGS -->
+	<link class="js-stylesheet" href="static/css/light.css" rel="stylesheet">
+	<!-- END SETTINGS -->
+	<script>
+
+		function Hide_Model(){
+			document.getElementById("Main_Model").style.display = "none";
+			document.getElementById("Main_Prediction").style.display = "block";
+		}
+
+		function Hide_Prediction(){
+			document.getElementById("Main_Prediction").style.display = "none";
+			document.getElementById("Main_Model").style.display = "block";
+		}
+
+	</script>
+
+
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="px-2 sidebar-brand" href="/">
+					<span class="sidebar-brand-text align-middle">
+						<img src="static/resources/images/World.png" alt="logo" style="width: 35px;">
+						México Real State
+						<sup><small class="badge bg-primary text-uppercase">Pro</small></sup>
+					</span>
+				</a>
+
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						
+					</li>
+					<li class="sidebar-item active">
+						<a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboards</span>
+						</a>
+						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+							<li class="sidebar-item "><a class="sidebar-link" href="/tableau">Descriptive Analysis</a></li>
+							<li class="sidebar-item active"><a class="sidebar-link" href="/comparison">Model Comparison</a></li>
+							<li class="sidebar-item "><a class="sidebar-link" href="/">Final Product</a></li>
+						</ul>
+					</li>
+				</ul>
+
+				<div class="sidebar-cta">
+					<div class="sidebar-cta-content">
+						<svg height="28" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="28" data-view-component="true" class="octicon octicon-mark-github v-align-middle">
+							<path fill="#ffffff" fill-rule="white" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+						</svg>
+						<strong class="d-inline-block m-2">Github</strong>
+						<div class="mb-3 text-sm">
+							Visit our repo to learn more about the project.
+						</div>
+
+						<div class="d-grid">
+							<a href="https://github.com/andrebestrada/Machine-Learning-Final-Project" class="btn btn-outline-primary" target="_blank">Visit</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</nav>
+
+		<div class="main">
+
+
+			<main class="content pt-4" id="Main_Model">
+				<div class="container-fluid p-0">
+					<div class="row  mb-2 mb-xl-3">
+						<div class="col-6 d-none d-sm-block">
+							<h3><strong>Model</strong> Comparison</h3>
+							<hr>
+							
+						</div>
+
+						<div class="col-auto ms-auto text-end mt-n1">
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-10">
+							<div class="card flex-fill w-100 p-3">
+								<div class="card-header">									
+									<h3 class="card-title mb-0">Comparison Table</h3>
+								</div>
+								<div class="card-body pt-2 pb-0">
+								
+									<!-- Table starts -->
+									<table style="width: 1200px; font-size: medium;" class="table table-striped table-hover table-bordered">
+										<tbody>
+											<tr>
+												<th style="width: 160px;">&nbsp;</th>
+												<th style="width: 180px;" scope="&ldquo;col&rdquo;">Random Forest Regression</th>
+												<th style="width: 180px;" scope="&ldquo;col&rdquo;">K Nearest Neighbor</th>
+												<th style="width: 180px;" scope="&ldquo;col&rdquo;">Neural Network</th>
+											</tr>
+									
+											<tr style="height: 60px;">
+												<th scope="&ldquo;row&rdquo;">Mean Average Error</th>
+												<td>327 623</td>
+												<td>1 554 780.80</td>									
+												<td>1 911 110.52</td>
+											</tr>
+					
+											<tr style="height: 60px;">	
+												<th scope="&ldquo;row&rdquo;">Root Mean Squared Error</th>				
+												<td>528 468.71</td>
+												<td>3 979 855.96</td>
+												<td>3 363 693.25</td>
+											</tr>
+										</tbody>
+									</table>
+									<!--  Table finishes-->
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-10">
+							<div class="card flex-fill w-100 p-3">
+								<div class="card-header">									
+									<h3 class="card-title mb-0">MAE Comparison</h3>
+								</div>
+								
+								<div class="card-body pt-2 pb-0">
+									<canvas id="myChart" width="1200px" height="300px"></canvas>
+
+									<!--Chart.js  -->
+									<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+									<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js"></script>
+
+										<script>
+											var ctx = document.getElementById('myChart');
+											var myChart = new Chart(ctx, {
+												type: 'bar',
+												data: {
+													labels: ['Random Forest', 'K Nearest Neighbor', 'Neural Network'],
+													datasets: [{
+														label: 'Mean Absolute Error',
+														data: [327623, 1554780.80, 1911110.52],
+														backgroundColor: [
+															'rgba(85, 173, 92, 1)',
+															'rgba(255, 190, 82, 1)',
+															'rgba(236, 0, 41, 1)',
+														],
+														// borderColor: [
+														// 	'rgba(255, 99, 132, 1)',
+														// 	'rgba(54, 162, 235, 1)',
+														// 	'rgba(255, 206, 86, 1)',
+														// 	'rgba(75, 192, 192, 1)',
+														// ],
+														borderWidth: 1,
+														datalabels:{
+															anchor:'end',
+															align:'top',
+															font:{
+																weight:'bold',
+																size:16
+															}
+
+														}
+													}]
+												},
+												plugins: [ChartDataLabels],
+												options: {
+													legend:{
+														display:false
+													},
+													scales: {
+														y: {
+															beginAtZero: true
+														}
+													},
+													plugins:{   
+														legend: {
+														display: false,
+																},
+															}
+             
+												}
+											});
+										</script>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+			</main>
+
+
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a href="index.html" class="text-muted"><strong>Bootcamp Final Project</strong></a>
+							</p>
+						</div>
+						<div class="col-6 text-end">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Support</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Privacy</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById("Main_Prediction").style.display = "none";
+	</script>
+
+	<!-- d3 JS -->
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	
+	<!-- Plotly JS -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+	<!--Chart.js  -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+	
+	<script src="static/js/app.js"></script>
+	<!-- Custom js for this page -->
+	<!-- <script src="Static/js/app.js"></script> -->
+	<!-- <script src="Static/js/grid_music_analysis.js"></script> -->
+
+	<!-- Moment is used to parse dates formats -->
+	<script src="https://unpkg.com/moment@2.24.0/moment.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/linq.js/2.2.0.2/linq.min.js"></script>
+	
+
+	</body>
+
+</html>

@@ -51,14 +51,12 @@ def data_loading():
 
 # Function Splits Data and Transforms Categorical Values with One Hot Encoding
 def split_and_encoding(data):
-    print(data.columns)
     X_full = data
     y = X_full.price
     features = ['type_of_prop','cp','Superficie m2', 'Ambientes', 'Recamaras', 'Banos','Estacionamientos', 'Antiguedad', 'Cantidad de pisos','Cuota Mantenimiento', 'Bodegas']
     X = X_full[features]
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=0.8, test_size=0.2, random_state=0)
 
-    print(X)
     #One Hot Encoding  
     s = (X_train.dtypes == 'object')
     object_cols = list(s[s].index)
@@ -91,11 +89,19 @@ def machine_learning_model(data, model):
     score = round(model.score(OH_X_valid, y_valid)*100,2)
     mape = round((np.mean(np.abs((y_valid - prediction) / np.abs(y_valid)))),2)
     acc = round(100*(1 - mape), 2)
-    mape = mape * 100
+    mape = round(mape * 100, 2)
     rmse = np.sqrt(metrics.mean_squared_error(y_valid, prediction))
 
     # Feature Importance
-    df = pd.DataFrame({'Features':OH_X_valid.columns, 'Importance':model.feature_importances_}).reset_index(drop=True)
+    importances_round=[]
+    importances=model.feature_importances_
+
+    for x in importances:
+        importances_round.append(round(x,2))
+    
+    print(importances_round)
+
+    df = pd.DataFrame({'Features':OH_X_valid.columns, 'Importance':importances_round}).reset_index(drop=True)
 
     try:
         weight = float(float(df[df.iloc[:, 0] == 0]['Importance']))+float(float(df[df.iloc[:, 0] == 1]['Importance']))
@@ -131,6 +137,10 @@ def index():
 def index2():
     return render_template('tableau.html')
 
+@application.route("/comparison")
+def index3():
+    return render_template('comparison.html')
+
 @application.route("/dropdowns")
 def dropdowns():
     
@@ -152,7 +162,7 @@ def results():
     print("Its Alive :D")
 
     #################################################################################
-    # Print Parameters
+    # Get Parameters
     args = request.args
 
     #################################################################################
@@ -257,7 +267,6 @@ def prediction():
             parkinglot_default = v
         if k == "type" and v != '':
             if v == '0':
-                print("ES UNA CASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
                 house_default = 0
                 apartment_default = 1
    

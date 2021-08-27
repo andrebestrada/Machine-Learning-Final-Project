@@ -1,9 +1,8 @@
-// state='Puebla'
 console.log("Its alive");
 var base_url='http://127.0.0.1:5000';
 // var base_url='http://real-state-env.eba-putiyphn.us-east-2.elasticbeanstalk.com';
-var accuracy_value;
 
+var accuracy_value;
 var canvasBar;
 var test;
 var state;
@@ -31,9 +30,26 @@ function BarChartCanvas(id, category, streams, bar_color){
         data: {
             // labels: first(10,category),
             labels: category,
-            datasets: [{data: streams, label: 'Model Weight', backgroundColor: [bar_color], borderWidth: 2}]
+            datasets: [{data: streams, 
+                label: 'Model Weight', 
+                backgroundColor: [bar_color], 
+                borderWidth: 2,	
+                datalabels:{
+                    anchor:'end',
+                    align:'top',
+                    font:{
+                        weight:'bolder',
+                        size:14
+                    }
+
+                }
+            }]
         },
+        plugins: [ChartDataLabels],
         options: {
+            legend:{
+                display:false
+            },
             scales: {
                 y: {
                     display: true,
@@ -46,6 +62,11 @@ function BarChartCanvas(id, category, streams, bar_color){
                 //     ticks: {color : 'gray', font: {family:"Poppins"}},
                 // },
             },
+            plugins:{   
+                legend: {
+                display: false
+                        },
+                    }
             // plugins: {legend: {display:true, labels:{color:'black',font: {family:"Poppins"}}}}
         }
     });
@@ -74,7 +95,7 @@ function BoxChartCanvas(){
 // Function that draws an individual Box Chart
 function BoxChart(id, box_data){
     // var trace1 = {y: box_data, type: 'box', boxpoints:'all',jitter:0.1,pointspos:-1.8};
-    var trace1 = {y: box_data, type: 'box', boxpoints:'all'};
+    var trace1 = {y: box_data, type: 'box', boxpoints:'all', marker: {color: '#3b7ddd'},};
     // var trace1 = {y: box_data, type: 'box'};
     var data = [trace1];
     var layout = {
@@ -109,7 +130,8 @@ d3.json(base_url+'/dropdowns?').then(importedData=>{
 })
 
 // Listener that updates model when any filter changes
-d3.selectAll(".form-control_").on("change", updateModel);
+d3.selectAll(".form-state").on("change", updateModel);
+d3.selectAll("#filter_button").on("click", updateModel);
 
 function updateModel() {
     console.log("Updating Model...")
@@ -137,7 +159,7 @@ function updateModel() {
         d3.select("#MAPE").text(data.mape+"%")
         d3.select("#ACCURACY").text(data.accuracy+"%") 
         d3.select("#RMSE").text(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MXN' }).format(data.rmse))
-        d3.select("#state_selected").text("Prediction based on " + test + " model")
+        d3.select("#state_selected").text("Prediction based on " + test + " data")
         
         var features_lst = []
         var weight_lst = []
@@ -162,7 +184,8 @@ function updateModel() {
 // Predictions
 
 // Listener that updates model when any filter changes
-d3.selectAll(".form-predictor_").on("change", predictModel);
+d3.selectAll(".form-type").on("change", predictModel);
+d3.selectAll("#predict_button").on("click", predictModel)
 
 function predictModel() {
     console.log("Predicting Model...")
