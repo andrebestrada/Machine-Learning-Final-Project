@@ -1,0 +1,652 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="shortcut icon" href="static/resources/images/House sold.png" />
+	<title>México Real State</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	
+	<!-- BEGIN SETTINGS -->
+	<link class="js-stylesheet" href="static/css/light.css" rel="stylesheet">
+	
+	<!-- END SETTINGS -->
+	<script>
+
+		function Hide_Model(){
+			document.getElementById("Main_Model").style.display = "none";
+			document.getElementById("Main_Prediction").style.display = "block";
+		}
+
+		function Hide_Prediction(){
+			document.getElementById("Main_Prediction").style.display = "none";
+			document.getElementById("Main_Model").style.display = "block";
+		}
+
+	</script>
+
+
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="px-2 sidebar-brand" href="index.html">
+					<span class="sidebar-brand-text align-middle">
+						<img src="static/resources/images/World.png" alt="logo" style="width: 35px;">
+						México Real State
+						<sup><small class="badge bg-primary text-uppercase">Pro</small></sup>
+					</span>
+				</a>
+
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						
+					</li>
+					<li class="sidebar-item active">
+						<a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboards</span>
+						</a>
+						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+							<li class="sidebar-item"><a class="sidebar-link" href="tableau.html">Descriptive Analysis</a></li>
+							<li class="sidebar-item active"><a class="sidebar-link" href="index.html">Model</a></li>
+						</ul>
+					</li>
+				</ul>
+
+				<div class="sidebar-cta">
+					<div class="sidebar-cta-content">
+						<strong class="d-inline-block mb-2">Github Repo</strong>
+						<div class="mb-3 text-sm">
+							Visit our github page to learn more about the project.
+						</div>
+
+						<div class="d-grid">
+							<a href="https://github.com/andrebestrada/Machine-Learning-Final-Project" class="btn btn-outline-primary" target="_blank">Visit</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</nav>
+
+		<div class="main">
+			<!-- <nav class="navbar navbar-expand navbar-light navbar-bg">
+			
+
+				<form class="d-none d-sm-inline-block">
+					<div class="input-group input-group-navbar">
+						<input type="text" class="form-control" placeholder="Search…" aria-label="Search">
+						<button class="btn" type="button">
+							<i class="align-middle" data-feather="search"></i>
+						</button>
+					</div>
+				</form>
+
+				<div class="navbar-collapse collapse"> 
+				
+				</div>
+				
+				<img src="static/resources/images/House sold.png" style="width:40px;height:40px">
+				
+			</nav> -->
+
+			<main class="content pt-4" id="Main_Model">
+				<div class="container-fluid p-0">
+					<div class="row  mb-2 mb-xl-3">
+						<div class="col-auto d-none d-sm-block">
+							<h3><strong>Model</strong> Design</h3>
+							<hr>
+							<h4><strong>Random Forest Regressor</strong> with 100 estimators and mae criterion</h4>
+						</div>
+
+						<div class="col-auto ms-auto text-end mt-n1">
+							<a id="model_show" href="#" class="btn btn-primary ">Model</a>
+							<a onclick="Hide_Model()" id="predictions_show" href="#" class="btn btn-light bg-white me-2">Predictions</a>
+						</div>
+					</div>
+					<div class="row">
+				
+						<div class="col-xl-6 col-xxl-7">
+							<div class="card flex-fill w-100">
+								<div class="card-header">
+									<div class="float-end">
+										<form class="row g-">
+											<!-- <div class="col-auto"> -->
+												<select id="state_selector" class="form-control form-control_ form-select form-select-sm bg-light border-0">
+												</select>
+												
+											<!-- </div> -->
+											
+										</form>
+									</div>
+									<h5 class="card-title mb-0">Model Features Importance</h5>
+								</div>
+								<div class="card-body pt-2 pb-3">
+									<div class="chart chart-sm">
+										<canvas id="features_by_importance" height="100"></canvas>
+										<!-- <canvas id="chartjs-dashboard-line"></canvas> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xl-6 col-xxl-5 d-flex">
+							
+								<div class="w-100">
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">MAE</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="static/resources/images/House sold.png" alt="mae">
+														</div>
+													</div>
+													<h1 class="mt-1 mb-3 performance-cards" id="MAE"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-primary-light"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">Accuracy</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="static/resources/images/Target.png" alt="mae">
+														</div>
+
+													</div>
+													<h1 class="mt-1 mb-3 performance-cards" id="ACCURACY"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">MAPE</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="static/resources/images/Neurons.png" alt="mae">
+														</div>
+
+													</div>
+													<h1 class="mt-1 mb-3 performance-cards" id="MAPE"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">Score</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="static/resources/images/Machine Learning.png" alt="mae">
+														</div>
+
+													</div>
+													<h1 class="mt-1 mb-3 performance-cards" id="SCORE"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-danger-light"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+
+<!-- ############################################################################################################################ -->
+<!-- Input fields for the model -->
+
+<div class="row mb-3">
+	<div class="col-auto d-none d-sm-block">
+		<h3><strong>Filter</strong> Data</h3>
+	</div>
+
+</div>
+
+<div class="row">
+	
+	
+	<div class="col-3 d-flex">
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Max Price</span>
+			</div>
+			<input id="max_price" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		</div>
+	</div>
+
+	<div class="col-3 d-flex">
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Max Surface</span>
+			</div>
+			<input id="max_surface" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		</div>
+	</div>
+
+	<div class="col-3 d-flex">
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Max Rooms</span>
+			</div>
+			<input id="max_rooms" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		</div>
+	</div>
+
+	<div class="col-3 d-flex">
+		<div class="input-group input-group-sm mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroup-sizing-sm">Max Enviroments</span>
+			</div>
+			<input id="max_enviroments" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+		</div>
+	</div>
+
+</div>
+
+
+					<div class="row">
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Min Price</span>
+								</div>
+								<input id="min_price" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Min Surface</span>
+								</div>
+								<input id="min_surface" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Min Rooms</span>
+								</div>
+								<input id="min_rooms" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Min Enviroments</span>
+								</div>
+								<input id="min_enviroments" type="text" class="form-control form-control_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					</div>
+				
+
+
+<!-- ############################################################################################################################ -->
+<!-- Box Plots -->
+
+
+					<div class="row">
+						<div class="col-12 col-md-6 col-xxl-3 d-flex">
+							<div class="card flex-fill w-100"> 
+								<div class="card-header">
+									<div class="card-actions float-end">
+										<!-- <img src="static/resources/images/pricing.png" alt="prices" style="height: 55px;"> -->
+									</div>
+									<h5 class="card-title mb-0">Prices</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div id="boxplot_prices"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12 col-md-12 col-xxl-3 d-flex">
+							<div class="card flex-fill w-100">
+								<div class="card-header">
+									<div class="card-actions float-end">
+										<!-- <img src="static/resources/images/surface.png" alt="prices" style="height: 55px;"> -->
+									</div>
+									<h5 class="card-title mb-0">Constructed Surface</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div id="boxplot_surface">
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12 col-md-6 col-xxl-3 d-flex">
+							<div class="card flex-fill">
+								<div class="card-header">
+									<div class="card-actions float-end">
+										<!-- <img src="static/resources/images/rooms.png" alt="prices" style="height: 55px;"> -->
+									</div>
+									<h5 class="card-title mb-0">Rooms</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div id="boxplot_room">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12 col-md-6 col-xxl-3 d-flex">
+							<div class="card flex-fill">
+								<div class="card-header">
+									<div class="card-actions float-end">
+										<!-- <img src="static/resources/images/House Owner.png" alt="prices" style="height: 55px;"> -->
+									</div>
+									<h5 class="card-title mb-0">Enviroments</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div id="boxplot_enviroment">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--############################################################################ -->
+					<!-- <div class="row">
+						<div class="col-12 col-md-6 col-xxl-3 d-flex">
+							<div class="card flex-fill w-100">
+								<div class="card-header">
+									<div class="card-actions float-end">
+										
+									</div>
+									<h5 class="card-title mb-0">Prices</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div class="py-3" id="box_prices">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-12 col-xxl-3 d-flex">
+							<div class="card flex-fill w-100">
+								<div class="card-header">
+									<div class="card-actions float-end">
+								
+									</div>
+									<h5 class="card-title mb-0">Constructed Surface</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div class="py-3" id="features_plot">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-1">
+							<div class="card flex-fill">
+								<div class="card-header">
+									<div class="card-actions float-end">
+							
+									</div>
+									<h5 class="card-title mb-0">Rooms</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div class="py-3">
+											Here goes the box plot
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-1">
+							<div class="card flex-fill">
+								<div class="card-header">
+									<div class="card-actions float-end">
+							
+									</div>
+									<h5 class="card-title mb-0">Bathrooms</h5>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+										<div class="py-3">
+											Here goes the box plot
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</main>
+
+
+			<main class="content pt-4" id="Main_Prediction">
+				<div class="container-fluid p-0">
+					<div class="row  mb-2 mb-xl-3">
+						<div class="col-auto d-none d-sm-block">
+							<h3><strong>Prediction</strong> Model</h3>
+						</div>
+
+						<div class="col-auto ms-auto text-end mt-n1">
+							<a onclick="Hide_Prediction()" id="model_show" href="#" class="btn btn-light bg-white">Model</a>
+							<a id="predictions_show" href="#" class="btn btn-primary me-2">Predictions</a>
+						</div>
+					</div>
+
+					<!-- ####################################################################### -->
+					<!-- Input fields for the model -->
+
+					<div class="row mt-4">
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Postal Code</span>
+								</div>
+								<input id="cp_selector" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Total Surface</span>
+								</div>
+								<input id="total_surface" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Constructed Surface</span>
+								</div>
+								<input id="cons_surface" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Rooms</span>
+								</div>
+								<input id="rooms" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Bathrooms</span>
+								</div>
+								<input id="bathrooms" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Parking Lots</span>
+								</div>
+								<input id="parking_lots" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+							</div>
+						</div>
+					
+						
+					</div>
+
+					<div class="row mt-5">
+						<div class="d-flex">
+							<div class="col-auto d-none d-sm-block">
+								<h3 id="state_selected"><strong></strong></h3>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row mt-1">
+						<div class="col-12 d-flex">
+								<div class="w-100">
+									<div class="row">
+										<div class="col-6">
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">ESTIMATED VALUE OF YOUR NEW HOME</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="static/resources/images/House sold.png" alt="mae">
+														</div>
+													</div>
+													<h1 class="mt-1 mb-3 h1" id="predicted_value"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-primary-light"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+											<div class="card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col mt-0">
+															<h5 class="card-title">ACCURACY</h5>
+														</div>
+	
+														<div class="col-auto">
+															<img class="avatar" src="static/resources/images/Target.png" alt="mae">
+														</div>
+
+													</div>
+													<h1 class="mt-1 mb-3" id="accuracy_value"></h1>
+													<div class="mb-0">
+														<!-- <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span> -->
+														<!-- <span class="text-muted">Since last week</span> -->
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+						</div>
+					</div>
+
+
+				</div> <!--end of container-->
+			</main> <!--end of main-->
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a href="index.html" class="text-muted"><strong>Bootcamp Final Project</strong></a>
+							</p>
+						</div>
+						<div class="col-6 text-end">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Support</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="#">Privacy</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById("Main_Prediction").style.display = "none";
+	</script>
+
+	<!-- d3 JS -->
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	
+	<!-- Plotly JS -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+	<!--Chart.js  -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+	
+	<script src="static/js/app.js"></script>
+	<!-- Custom js for this page -->
+	<!-- <script src="Static/js/app.js"></script> -->
+	<!-- <script src="Static/js/grid_music_analysis.js"></script> -->
+
+	<!-- Moment is used to parse dates formats -->
+	<script src="https://unpkg.com/moment@2.24.0/moment.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/linq.js/2.2.0.2/linq.min.js"></script>
+	
+
+	</body>
+
+</html>
