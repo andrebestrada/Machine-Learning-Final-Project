@@ -9,6 +9,7 @@ from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 import numpy as np
 import pandas as pd
+from sklearn import metrics
 
 application = Flask(__name__)
 
@@ -16,6 +17,7 @@ application = Flask(__name__)
 def data_loading():
     # national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_final.json')
     national_data = pd.read_json('https://national-data.s3.amazonaws.com/national_data_complete.json')
+    national_data.rename(columns={'Superficie construida':'Superficie m2','Cuota mensual de mantenimiento':'Cuota Mantenimiento'}, inplace=True)
     national_data = national_data.fillna(0)
 
     national_data = national_data[national_data['currency']=='MXN']
@@ -49,13 +51,14 @@ def data_loading():
 
 # Function Splits Data and Transforms Categorical Values with One Hot Encoding
 def split_and_encoding(data):
-    
+    print(data.columns)
     X_full = data
     y = X_full.price
-    features = ['type_of_prop','cp', 'Superficie total','Superficie construida', 'Ambientes', 'Recamaras', 'Banos','Estacionamientos', 'Antiguedad', 'Cantidad de pisos','Cuota mensual de mantenimiento', 'Bodegas']
+    features = ['type_of_prop','cp','Superficie m2', 'Ambientes', 'Recamaras', 'Banos','Estacionamientos', 'Antiguedad', 'Cantidad de pisos','Cuota Mantenimiento', 'Bodegas']
     X = X_full[features]
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=0.8, test_size=0.2, random_state=0)
 
+    print(X)
     #One Hot Encoding  
     s = (X_train.dtypes == 'object')
     object_cols = list(s[s].index)
@@ -86,8 +89,10 @@ def machine_learning_model(data, model):
     #Performance Metrics 
     mae = round(mean_absolute_error(y_valid, prediction),2)
     score = round(model.score(OH_X_valid, y_valid)*100,2)
-    mape = round(np.mean(np.abs((y_valid - prediction) / np.abs(y_valid))),2)
+    mape = round((np.mean(np.abs((y_valid - prediction) / np.abs(y_valid)))),2)
     acc = round(100*(1 - mape), 2)
+    mape = mape * 100
+    rmse = np.sqrt(metrics.mean_squared_error(y_valid, prediction))
 
     # Feature Importance
     df = pd.DataFrame({'Features':OH_X_valid.columns, 'Importance':model.feature_importances_}).reset_index(drop=True)
@@ -110,7 +115,7 @@ def machine_learning_model(data, model):
     results={'mae':mae,
              'mape':mape,
              'accuracy':acc,
-             'score':score,
+             'rmse':rmse,
              'features_importance': dict_df,
             #  'box_prices':box_prices
             }
@@ -122,6 +127,9 @@ def machine_learning_model(data, model):
 def index():
     return render_template('index.html')
 
+@application.route("/tableau")
+def index2():
+    return render_template('tableau.html')
 
 @application.route("/dropdowns")
 def dropdowns():
@@ -201,15 +209,15 @@ def prediction():
     import statistics
     
     cp_default = statistics.median(national_data['cp'])
-    surfaceTot_default = statistics.median(national_data['Superficie total'])
     room_default = statistics.median(national_data['Recamaras'])
     bathroom_default = statistics.median(national_data['Banos'])
-    surface_Cons_default = statistics.median(national_data['Superficie construida'])
+    enviroment_default = statistics.median(national_data['Ambientes'])
+    surface_Cons_default = statistics.median(national_data['Superficie m2'])
     parkinglot_default = statistics.median(national_data['Estacionamientos'])
 
     antiguedad_default = statistics.median(national_data['Antiguedad'])
-    enviroment_default = statistics.median(national_data['Ambientes'])
-    mantenimiento_default = statistics.median(national_data['Cuota mensual de mantenimiento'])
+    surfaceTot_default = statistics.median(national_data['Superficie total'])
+    mantenimiento_default = statistics.median(national_data['Cuota Mantenimiento'])
     bodegas_default = statistics.median(national_data['Bodegas'])
     floor_default = statistics.median(national_data['Cantidad de pisos'])
     
@@ -228,16 +236,17 @@ def prediction():
     # bodegas_default = national_data['Bodegas'].mode()
     # floor_default = national_data['Cantidad de pisos'].mode()
 
-    house_default = 0
-    apartment_default = 1
+    house_default = 1
+    apartment_default = 0
+
 
     args = request.args
     
     for k, v in args.items():
         if k == "postal_code" and v != '':
             cp_default = v
-        if k == "total_surface" and v != '':
-            surfaceTot_default = v
+        if k == "enviroments" and v != '':
+            enviroment_default = v
         if k == "rooms" and v != '':
             room_default = v
         if k == "bathrooms" and v != '':
@@ -246,12 +255,18 @@ def prediction():
             surface_Cons_default = v
         if k == "parking_lots" and v != '':
             parkinglot_default = v
+        if k == "type" and v != '':
+            if v == '0':
+                print("ES UNA CASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                house_default = 0
+                apartment_default = 1
+   
     
     input_prediction = pd.DataFrame()
-    input_prediction = pd.DataFrame({'cp':cp_default, 'Superficie construida':surface_Cons_default,'Recamaras': room_default, 
+    input_prediction = pd.DataFrame({'cp':cp_default, 'Superficie m2':surface_Cons_default,'Recamaras': room_default, 
                                  'Estacionamientos': parkinglot_default, 'Cantidad de pisos':floor_default,
-                                 'Bodegas':bodegas_default, 'Superficie total':surfaceTot_default, 'Ambientes':enviroment_default,
-                                 'Banos':bathroom_default, 'Antiguedad':antiguedad_default, 'Cuota mensual de mantenimiento':mantenimiento_default,
+                                 'Bodegas':bodegas_default, 'Ambientes':enviroment_default,
+                                 'Banos':bathroom_default, 'Antiguedad':antiguedad_default, 'Cuota Mantenimiento':mantenimiento_default,
                                 '0':house_default,'1':apartment_default},index=[0]) 
     print(input_prediction)
 
@@ -262,6 +277,8 @@ def prediction():
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
+
+
 
 
 if __name__ == "__main__":

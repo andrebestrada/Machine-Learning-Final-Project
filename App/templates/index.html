@@ -54,7 +54,7 @@
 							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboards</span>
 						</a>
 						<ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
-							<li class="sidebar-item"><a class="sidebar-link" href="tableau.html">Descriptive Analysis</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="/tableau">Descriptive Analysis</a></li>
 							<li class="sidebar-item active"><a class="sidebar-link" href="index.html">Model</a></li>
 						</ul>
 					</li>
@@ -204,7 +204,7 @@
 												<div class="card-body">
 													<div class="row">
 														<div class="col mt-0">
-															<h5 class="card-title">Score</h5>
+															<h5 class="card-title">Root Mean Square Error</h5>
 														</div>
 	
 														<div class="col-auto">
@@ -212,7 +212,7 @@
 														</div>
 
 													</div>
-													<h1 class="mt-1 mb-3 performance-cards" id="SCORE"></h1>
+													<h1 class="mt-1 mb-3 performance-cards" id="RMSE"></h1>
 													<div class="mb-0">
 														<!-- <span class="badge badge-danger-light"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span> -->
 														<!-- <span class="text-muted">Since last week</span> -->
@@ -341,7 +341,7 @@
 									<div class="card-actions float-end">
 										<!-- <img src="static/resources/images/surface.png" alt="prices" style="height: 55px;"> -->
 									</div>
-									<h5 class="card-title mb-0">Constructed Surface</h5>
+									<h5 class="card-title mb-0">Surface m2</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
@@ -479,8 +479,24 @@
 
 					<!-- ####################################################################### -->
 					<!-- Input fields for the model -->
-
 					<div class="row mt-4">
+						<div class="col-3 d-flex">
+							<div class="input-group input-group-sm mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Type of Property</span>
+								</div>
+								<select id="property_selector" class="form-control form-predictor_ form-select form-select-m bg-light border-0">
+									<option value=""></option>
+									<option value="1">House</option>
+									<option value="0">Apartment</option>
+								</select>
+								
+							</div>
+						</div>	
+					</div>
+					
+
+					<div class="row ">
 						<div class="col-3 d-flex">
 							<div class="input-group input-group-sm mb-3">
 								<div class="input-group-prepend">
@@ -492,17 +508,17 @@
 						<div class="col-3 d-flex">
 							<div class="input-group input-group-sm mb-3">
 								<div class="input-group-prepend">
-									<span class="input-group-text" id="inputGroup-sizing-sm">Total Surface</span>
+									<span class="input-group-text" id="inputGroup-sizing-sm">Surface m2</span>
 								</div>
-								<input id="total_surface" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+								<input id="cons_surface" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 							</div>
 						</div>
 						<div class="col-3 d-flex">
 							<div class="input-group input-group-sm mb-3">
 								<div class="input-group-prepend">
-									<span class="input-group-text" id="inputGroup-sizing-sm">Constructed Surface</span>
+									<span class="input-group-text" id="inputGroup-sizing-sm">Enviroments</span>
 								</div>
-								<input id="cons_surface" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+								<input id="enviroments" type="text" class="form-control form-predictor_" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 							</div>
 						</div>
 					</div>

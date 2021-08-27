@@ -1,7 +1,7 @@
 // state='Puebla'
 console.log("Its alive");
-//var base_url='http://127.0.0.1:5000';
-var base_url='http://real-state-env.eba-putiyphn.us-east-2.elasticbeanstalk.com';
+var base_url='http://127.0.0.1:5000';
+// var base_url='http://real-state-env.eba-putiyphn.us-east-2.elasticbeanstalk.com';
 var accuracy_value;
 
 var canvasBar;
@@ -74,8 +74,8 @@ function BoxChartCanvas(){
 // Function that draws an individual Box Chart
 function BoxChart(id, box_data){
     // var trace1 = {y: box_data, type: 'box', boxpoints:'all',jitter:0.1,pointspos:-1.8};
-    // var trace1 = {y: box_data, type: 'box', boxpoints:'all'};
-    var trace1 = {y: box_data, type: 'box'};
+    var trace1 = {y: box_data, type: 'box', boxpoints:'all'};
+    // var trace1 = {y: box_data, type: 'box'};
     var data = [trace1];
     var layout = {
         autosize: false,
@@ -97,7 +97,7 @@ function query_params(){
 }
 
 function predict_params(){
-    return '&postal_code=' + postal_code + '&total_surface=' + total_surface + '&rooms=' + rooms + '&bathrooms=' + bathrooms + '&constructed_surface=' + constructed_surface + '&parking_lots=' + parking_lots 
+    return '&postal_code=' + postal_code + '&type=' + type + '&enviroments=' + enviroments + '&rooms=' + rooms + '&bathrooms=' + bathrooms + '&constructed_surface=' + constructed_surface + '&parking_lots=' + parking_lots 
 }
 
 // Fill dropdowns when page loads
@@ -134,9 +134,9 @@ function updateModel() {
         accuracy_value = data.accuracy+"%"
 
         d3.select("#MAE").text(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MXN' }).format(data.mae))
-        d3.select("#MAPE").text(data.mape)
+        d3.select("#MAPE").text(data.mape+"%")
         d3.select("#ACCURACY").text(data.accuracy+"%") 
-        d3.select("#SCORE").text(data.score)
+        d3.select("#RMSE").text(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'MXN' }).format(data.rmse))
         d3.select("#state_selected").text("Prediction based on " + test + " model")
         
         var features_lst = []
@@ -168,10 +168,10 @@ function predictModel() {
     console.log("Predicting Model...")
     console.log("En predict: " + test)
     
-
+    type = d3.select("#property_selector").property("value")
     state = d3.select("#state_selector").property("value")
     postal_code = d3.select("#cp_selector").property("value")
-    total_surface = d3.select("#total_surface").property("value")
+    enviroments = d3.select("#enviroments").property("value")
     rooms = d3.select("#rooms").property("value")
     bathrooms = d3.select("#bathrooms").property("value")
     constructed_surface = d3.select("#cons_surface").property("value")
