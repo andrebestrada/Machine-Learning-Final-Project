@@ -1,6 +1,7 @@
 // state='Puebla'
 console.log("Its alive");
-var base_url='http://127.0.0.1:5000';
+//var base_url='http://127.0.0.1:5000';
+var base_url='http://real-state-env.eba-putiyphn.us-east-2.elasticbeanstalk.com';
 var accuracy_value;
 
 var canvasBar;
