@@ -35,11 +35,9 @@ This is the amazing team!
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#About-the-project">About the project</a></li>
-    <li><a href="#Languages-&-Tools Used">Languages & Tools Used</a></li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#Languages-&-Tools-Used">Languages & Tools Used</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#Prerequisites">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
@@ -78,15 +76,6 @@ This section should list any major frameworks that you built your project using.
 * AWS
 * CSS
 * Excely
-
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 
 ### Prerequisites
