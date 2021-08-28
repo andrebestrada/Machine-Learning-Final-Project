@@ -35,7 +35,7 @@ This is the amazing team!
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#About-the-project">About the project</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
+    <li><a href="#Languages-&-Tools Used">Languages & Tools Used</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
