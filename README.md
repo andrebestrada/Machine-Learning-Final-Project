@@ -8,7 +8,6 @@
 -->
 
 [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -50,7 +49,8 @@ This is the amazing team!
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+<p align="center">
+    <img src="/Resources/Images/logo.png" width="=80" height="80" >
 [![Product Name Screen Shot][product-screenshot]]<img src="/Resources/Images/logo.png"(https://example.com)
 
 We wanted to create a final project that could show what we had learned in the past six months with a focus on machine learning...
