@@ -60,6 +60,7 @@ Key questions:
 We wanted to do it as realistic as possible so we got the data from Metros Cubicos*. It is important to highlight that we are not affiliated to the company and our results have nothing to do with their technology.
 
 <!-- Languages & Tools Used -->
+
 ## Languages & Tools Used
 
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
