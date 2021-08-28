@@ -74,7 +74,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+We wanted to create a final project that could show what we had learned in the past six months with a focus on machine learning...
 
 Here's why:
 * Your time should be focused on creating something amazing. A project that solves a problem and helps others
