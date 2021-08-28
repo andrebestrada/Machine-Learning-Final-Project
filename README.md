@@ -48,10 +48,10 @@ This is the amazing team!
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
 <p align="center">
     <img src="/Resources/Images/logo.png" width="=60" height="60" >
 </p>
+    ## About The Project
 
 We wanted to create a final project that could show what we had learned in the past six months with a focus on machine learning...
 
