@@ -19,7 +19,7 @@
 
 ### Contributors
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+This is the amazing team!
 * [Andrés Estrada](https://github.com/andrebestrada)
 * [Leo Preciado](https://github.com/leoipn)
 * [Orlando Garcia](https://github.com/Valkiar85)
