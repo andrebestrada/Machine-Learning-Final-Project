@@ -1,4 +1,4 @@
-# Mexican real estate machine learning final project
+# Mexican Real Estate Machine Learning Final Project
 
 ## Launch our Web App :D
   ```sh
@@ -11,8 +11,6 @@
 *** or simply open an issue with the tag "enhancement".
 *** Thanks again! Now go create something AMAZING! :D
 -->
-
-[![Contributors][contributors-shield]][contributors-url]
 
 <!-- PROJECT LOGO -->
 ## Demo
@@ -54,7 +52,7 @@ This is the amazing team!
 
 ## About The Project
 <p align="center">
-    <img src="/Resources/Images/logo.png" width="=60" height="60" >
+    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Resources/Images/House%20sold.png" width="=60" height="60" >
 </p>
 We wanted to create a final project that could show what we had learned in the past six months with a focus on machine learning...
 
