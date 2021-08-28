@@ -10,18 +10,6 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 
-
-### Contributors
-
-This is the amazing team!
-* [Andrés Estrada](https://github.com/andrebestrada)
-* [Leo Preciado](https://github.com/leoipn)
-* [Orlando Garcia](https://github.com/Valkiar85)
-* [Carlos Mendoza](https://github.com/carlosmendozaj)
-* [Alvar Herrera](https://github.com/Alvarherrera)
-<!-- * [JQuery](https://jquery.com) -->
-<!-- * [Laravel](https://laravel.com) -->
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -32,7 +20,7 @@ This is the amazing team!
   <h3 align="center">Bootcamp Final Project</h3>
 
   <p align="center">
-    Demystifying Machine Learning 
+    Predicting your house/apartment anywhere in Mexico
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
@@ -44,6 +32,18 @@ This is the amazing team!
 <!--     <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a> -->
   </p>
 </p>
+
+
+### Contributors
+
+This is the amazing team!
+* [Andrés Estrada](https://github.com/andrebestrada)
+* [Leo Preciado](https://github.com/leoipn)
+* [Orlando Garcia](https://github.com/Valkiar85)
+* [Carlos Mendoza](https://github.com/carlosmendozaj)
+* [Alvar Herrera](https://github.com/Alvarherrera)
+<!-- * [JQuery](https://jquery.com) -->
+<!-- * [Laravel](https://laravel.com) -->
 
 
 
