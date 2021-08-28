@@ -1,5 +1,11 @@
 # Mexican real estate machine learning final project
 
+## Launch our Web App :D
+* Visit the following website
+  ```sh
+  http://real-state-env.eba-putiyphn.us-east-2.elasticbeanstalk.com/
+  ```
+
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
 *** that would make this better, please fork the repo and create a pull request
@@ -10,9 +16,10 @@
 [![Contributors][contributors-shield]][contributors-url]
 
 <!-- PROJECT LOGO -->
+## Demo
 <br />
 <p align="center">
-    <img src="/Resources/Images/dashboard.png" width="=600" height="800" >
+    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Demo/M%C3%A9xico%20Real%20State%20Demo.gif" width="=600" height="800" >
   
 </p>
 
@@ -78,14 +85,6 @@ This section should list any major frameworks that you built your project using.
 * Excely
 
 
-<!-- Prerequisites -->
-### Prerequisites
-
-Learn how to read and use a browser ...
-* Visit the following website
-  ```sh
-  http://real-state-env.eba-putiyphn.us-east-2.elasticbeanstalk.com/
-  ```
 
 <!-- CONTACT -->
 ## Contact
