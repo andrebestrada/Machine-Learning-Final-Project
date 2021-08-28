@@ -1,4 +1,4 @@
-# Machine Learning Final Project
+# Mexican real estate machine learning final project
 
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
