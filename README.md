@@ -37,6 +37,8 @@ This is the amazing team!
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
+          </li>
+      <a href="#Languages-&-Tools-Used">Languages & Tools Used</a>
       <ul>
         <li><a href="#Languages-&-Tools-Used">Languages & Tools Used</a></li>
       </ul>
