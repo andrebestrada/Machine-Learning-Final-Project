@@ -121,3 +121,14 @@ We want to thank every single bootcamp colleague ... but more importantly, our c
 [linkedin-url]:
 [product-screenshot]: images/screenshot.png
 
+
+## Some views of the Web App
+<br />
+<p align="center">
+    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Demo/1.jpeg" width="=600" >
+    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Demo/2.jpeg" width="=600" >
+    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Demo/3.jpeg" width="=600" >
+    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Demo/4.jpeg" width="=600" >
+    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Demo/5.jpeg" width="=600" >
+    
+</p>
