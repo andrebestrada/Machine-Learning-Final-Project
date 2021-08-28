@@ -51,7 +51,7 @@ This is the amazing team!
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]]<img src="/Resources/Images/logo.png"(https://example.com)
 
 We wanted to create a final project that could show what we had learned in the past six months with a focus on machine learning...
 
