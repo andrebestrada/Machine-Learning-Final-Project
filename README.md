@@ -13,7 +13,7 @@
 <!-- PROJECT LOGO -->
 <br />
 
-    <img src="/Resources/Images/dashboard.png" >
+    <img src="/Resources/Images/dashboard.png" width="=600" height="800" >
   
 </p>
 
