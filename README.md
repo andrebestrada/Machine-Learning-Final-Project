@@ -12,7 +12,7 @@
 
 <!-- PROJECT LOGO -->
 <br />
-
+<p align="center">
     <img src="/Resources/Images/dashboard.png" width="=600" height="800" >
   
 </p>
