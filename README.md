@@ -75,14 +75,22 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
-### Built With
+### Languages & Tools Used
 
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [Python](https://getbootstrap.com)
 * [Javascript](https://getbootstrap.com)
 * [Heroku](https://www.heroku.com/)
-<!-- * [JQuery](https://jquery.com) -->
-<!-- * [Laravel](https://laravel.com) -->
+* Jupyter Notebook
+* Sklearn, TensorFlow & Keras libraries
+* Flask
+* D3
+* Javascript
+* HTML
+* AWS
+* CSS
+* Excely
+
 
 
 
@@ -91,6 +99,7 @@ This section should list any major frameworks that you built your project using.
 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
+
 
 ### Prerequisites
 
