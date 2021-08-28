@@ -35,21 +35,8 @@ This is the amazing team!
 <details open="open">
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-          </li>
-      <a href="#Languages-&-Tools-Used">Languages & Tools Used</a>
-      <ul>
-        <li><a href="#Languages-&-Tools-Used">Languages & Tools Used</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
+    <li><a href="#About-the-project">About the project</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
