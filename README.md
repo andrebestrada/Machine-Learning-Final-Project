@@ -140,10 +140,12 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Font Awesome](https://fontawesome.com)
+
+We want to thank every single bootcamp colleague ... but more importantly, our class instructors
+* [Alex Sánchez Vega](https://twitter.com/masanchezvega)
+* [José Luis Porcayo](https://mx.linkedin.com/in/jos%C3%A9-luis-porcayo-jim%C3%A9nez)
+* [José Escudero](https://ca.linkedin.com/in/josescuderoh)
+
 
 
 
