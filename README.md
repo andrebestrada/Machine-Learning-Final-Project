@@ -36,8 +36,7 @@ This is the amazing team!
   <ol>
     <li><a href="#About-the-project">About the project</a></li>
     <li><a href="#Languages-&-Tools-Used">Languages & Tools Used</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#Prerequisites">License</a></li>
+    <li><a href="#Prerequisites">Prerequisites</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
@@ -78,6 +77,7 @@ This section should list any major frameworks that you built your project using.
 * Excely
 
 
+<!-- Prerequisites -->
 ### Prerequisites
 
 Learn how to read and use a browser ...
