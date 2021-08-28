@@ -1,7 +1,6 @@
 # Mexican real estate machine learning final project
 
 ## Launch our Web App :D
-* Visit the following website
   ```sh
   http://real-state-env.eba-putiyphn.us-east-2.elasticbeanstalk.com/
   ```
@@ -19,7 +18,7 @@
 ## Demo
 <br />
 <p align="center">
-    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Demo/M%C3%A9xico%20Real%20State%20Demo.gif" width="=600" height="800" >
+    <img src="https://github.com/andrebestrada/Machine-Learning-Final-Project/blob/main/Demo/M%C3%A9xico%20Real%20State%20Demo.gif" width="=600" >
   
 </p>
 
