@@ -16,9 +16,6 @@
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="/Resources/Images/logo.png" alt="Logo" width="80" height="80">
   </a>
-
-  <h3 align="center">Predicting your house/apartment anywhere in Mexico</h3>
- 
 </p>
 
 
