@@ -1,6 +1,6 @@
 # Mexican Real Estate Machine Learning Final Project
 
-## Launch our Web App :D
+## Launch our Web App
   ```sh
   http://real-state-env.eba-putiyphn.us-east-2.elasticbeanstalk.com/
   ```
